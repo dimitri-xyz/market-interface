@@ -7,6 +7,11 @@ module Market.Interface
     , OrderSide(..)
     , Quote(..)
     , QuoteBook(..)
+    , StrategyAdvice(..)
+    , Coin
+    , coinSymbol
+    , showBare
+    , readBare
     ) where
 
 import Data.Hashable
@@ -15,6 +20,11 @@ import Market.Types ( Price(..)
                     , OrderSide(..)
                     , Quote(..)
                     , QuoteBook(..)
+                    , StrategyAdvice(..)
+                    , Coin
+                    , coinSymbol
+                    , showBare
+                    , readBare
                     )
 
 ---------------------------------------
