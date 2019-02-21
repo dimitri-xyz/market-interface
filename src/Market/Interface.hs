@@ -1,6 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Market.Interface 
+module Market.Interface
     ( module Market.Interface
     , Price(..)
     , Vol(..)

@@ -11,9 +11,9 @@ data TradingEv
     | DoneEv
     | FillsEv
     | BookEv
-``` 
+```
 
-The Actions are: 
+The Actions are:
 
 ```
 data Action
@@ -34,7 +34,7 @@ In fact, the mapping the framework keeps is from `Maybe (ClientOID)` to `OrderID
 
 1. **PlaceEv** - Notifies the strategy that an order has been placed in the market. At a minimum, specifies the `Maybe ClientOID` of the Action that succeeded.
 
-2. **CancelEv** - Notifies the strategy that an order has been cancelled. At a minimum, specifies the `Maybe ClientOID` of the cancelled order. No more events for this order will occur. 
+2. **CancelEv** - Notifies the strategy that an order has been cancelled. At a minimum, specifies the `Maybe ClientOID` of the cancelled order. No more events for this order will occur.
 
 3. **DoneEv** - Notifies the strategy that an order has been completely executed and is now closed. At a minimum, specifies the `Maybe ClientOID` of the executed order. No more events for this order will occur. DoneEv and CancelEv events are mutually exclusive and cannot both happen for the same order.
 
@@ -46,7 +46,7 @@ In fact, the mapping the framework keeps is from `Maybe (ClientOID)` to `OrderID
 
 **BookEv**
 
-`BookEv` provide no synchronization guarantee. These events may happen at any time and are not necessarily sincronized with our own order placements and cancellations. In orders words, an `BookEv` may show an order for which an `CancelEv` has already happened. It may also already show an order for which we have not yet received an `PlaceEv`. 
+`BookEv` provide no synchronization guarantee. These events may happen at any time and are not necessarily sincronized with our own order placements and cancellations. In orders words, an `BookEv` may show an order for which an `CancelEv` has already happened. It may also already show an order for which we have not yet received an `PlaceEv`.
 
 (Ideally, `BookEv` should provide a "filtered" orderbook where all our own orders have been removed, but this is not and may never be impletemented due to exchange API limitations. Note that filtering by itself is *not* sufficient to avoid all the synchrony crazyness these events bring. The order of orderbooks may simply be flipped in time, no amount of filtering can make sense of that...)
 
@@ -92,6 +92,6 @@ The strategy is free to place actions in any order. However, if the strategy req
 
 A strategy can repeat `Nothing` as a `Maybe ClientOID` as much as it wants, but if a strategy repeats the same ClientOID for a `Just` value in multiple `PlaceLimit` requests, the results are undefined.
 
-(UPDATE 2019-01-29: I decided to add the `DoneEv` because either framework had to keep track of how much was executed in each order and then delete 
+(UPDATE 2019-01-29: I decided to add the `DoneEv` because either framework had to keep track of how much was executed in each order and then delete
 orderID <-> ClientOID mappings once the orders were fully executed or it had to be informed the order was done by somebody. If we didn't track this, we would have a memory leak due to keeping track of mappings for fully executed orders forever. So, either the strategy had to keep track of this and tell the framework - which seems backwards - or the framework could do it itself. If the framework is going to keep track of it, then it might as well provide this event, so that the strategy doesn't have to do it also! In short, someone has to do it, so it is best if the framework does it and frees up the strategy. Furthermore, for other exchanges this may be provided without any work.)
 
