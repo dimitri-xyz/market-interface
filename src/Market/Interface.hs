@@ -28,6 +28,8 @@ import Market.Types ( Price(..)
                     )
 
 ---------------------------------------
+-- Market/Strategy Interface
+
 newtype ClientOID = COID Int deriving (Show, Eq, Num, Hashable)
 
 data FillEv price vol
@@ -56,3 +58,14 @@ data Action price vol
     | CancelLimit
         { aCOID  :: ClientOID }
     deriving (Show, Eq)
+
+---------------------------------------
+-- Strategy Control Interface
+
+data ControlEv = ShutdownEv deriving (Show, Eq)
+
+data ControlAction
+    = ShutdownDone Int
+    | Error Int String
+    deriving (Show, Eq)
+
