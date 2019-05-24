@@ -28,7 +28,7 @@ The strategies will receive a single new event on the `ControlEv` interface: A `
 
 The framework will signal termination on the `ControlEv` interface. The strategy will send a single final `ShutdownDone` once it is done and it may issue multiple `Error` messages, as required, before then. The framework itself will timeout the strategy or start shutting down the connectors once it receives the `ShutdownDone` message.
 
-Another way to look at this extra "control" interface, is that it receives auxiliary information from outside any market. Such an interface would be necessary for any strategy that depends on "off market" events. In this case, we are using it for the shutdown event, but we might consider be using it for other changes, such as an update on the exchange rate or maybe a change in our risk tolerance, etc.
+Another way to look at this extra "control" interface, is that it receives auxiliary information from outside any market. A similar interface would be necessary for any strategy that depends on "off market" events. In this case, we are using it for the shutdown event, but we might consider be using similar interfaces for other changes, such as an update on the exchange rate or maybe a change in our risk tolerance, etc.
 
 #### Pre/Post conditions for connector shutdown signalling
 

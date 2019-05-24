@@ -37,14 +37,14 @@ data FillEv price vol
     { fSide  :: OrderSide
     , fPrice :: Price price   -- the price that was actually used
     , fVol   :: Vol   vol     -- the volume executed in this fill
-    , fmCOID :: Maybe ClientOID
+    , fCOID  :: ClientOID
     }
     deriving (Show, Eq)
 
 data TradingEv price vol quoteTail counter
-    = PlaceEv   (Maybe ClientOID)
-    | CancelEv  (Maybe ClientOID)
-    | DoneEv    (Maybe ClientOID)
+    = PlaceEv   ClientOID
+    | CancelEv  ClientOID
+    | DoneEv    ClientOID
     | FillsEv   [FillEv price vol]
     | BookEv    (QuoteBook price vol quoteTail counter)
     deriving (Show, Eq)
@@ -54,7 +54,7 @@ data Action price vol
         { aSide  :: OrderSide
         , aPrice :: Price price
         , aVol   :: Vol   vol
-        , amCOID :: Maybe ClientOID }
+        , aCOID  :: ClientOID }
     | CancelLimit
         { aCOID  :: ClientOID }
     deriving (Show, Eq)
